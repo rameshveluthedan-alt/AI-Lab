@@ -14,7 +14,7 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # 3. Launch the app
-streamlit run app.py
+streamlit run lib_App.py
 ```
 
 The browser will open at **http://localhost:8501**.  
@@ -27,7 +27,7 @@ The database file `library.db` is created automatically on first run.
 ```
 library_ai_project/
 │
-├── app.py                         # Streamlit UI — all pages & routing
+├── lib_App.py                         # Streamlit UI — all pages & routing
 │
 ├── db/
 │   ├── __init__.py
