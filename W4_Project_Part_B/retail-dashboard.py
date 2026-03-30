@@ -15,6 +15,8 @@ import plotly.graph_objects as go
 import warnings
 import os
 
+st.write(os.getcwd())          # shows current working directory
+st.write(os.listdir("."))      # lists all files in that directory
 warnings.filterwarnings("ignore")
 DATA_FILE = "Retail_Transactions_Dataset.zip"  # local file path
 
