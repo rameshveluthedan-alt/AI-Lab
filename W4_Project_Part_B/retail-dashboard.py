@@ -14,12 +14,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 import warnings
 import os
+import pathlib
 
-st.write(os.getcwd())          # shows current working directory
-st.write(os.listdir("."))      # lists all files in that directory
 warnings.filterwarnings("ignore")
-DATA_FILE = "Retail_Transactions_Dataset.zip"  # local file path
-
+BASE_DIR = pathlib.Path(__file__).parent
+DATA_FILE = BASE_DIR / "Retail_Transactions_Dataset.zip"
 # ─────────────────────────────────────────────
 # PAGE CONFIG
 # ─────────────────────────────────────────────
