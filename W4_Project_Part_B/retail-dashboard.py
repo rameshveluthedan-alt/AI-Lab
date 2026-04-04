@@ -127,12 +127,9 @@ def load_data(file) -> pd.DataFrame:
     df["Total_Items"] = pd.to_numeric(df["Total_Items"], errors="coerce")
     # Clean product list column — remove [ ] and quotes
     df["Product"] = df["Product"].str.replace(r"[\[\]']", "", regex=True)
-    if df["Discount_Applied"].dtype == object:
-        df["Discount_Applied"] = (
-            df["Discount_Applied"].str.strip().str.lower()
-            .map({"true": True, "false": False, "yes": True, "no": False, "1": True, "0": False})
-            .fillna(False)
-        )
+    df["Discount_Applied"] = df["Discount_Applied"].astype(str).str.strip().str.upper().map(
+    {"TRUE": True, "FALSE": False, "YES": True, "NO": False, "1": True, "0": False}
+    ).fillna(False)
     return df
 
 # ─────────────────────────────────────────────
