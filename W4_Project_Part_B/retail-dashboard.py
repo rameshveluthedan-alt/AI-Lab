@@ -128,7 +128,7 @@ def load_data(file) -> pd.DataFrame:
     # Clean product list column — remove [ ] and quotes
     df["Product"] = df["Product"].str.replace(r"[\[\]']", "", regex=True)
     df["Discount_Applied"] = df["Discount_Applied"].astype(str).str.strip().str.upper().map(
-    {"TRUE": True, "FALSE": False, "YES": True, "NO": False, "1": True, "0": False}
+        {"TRUE": True, "FALSE": False, "YES": True, "NO": False, "1": True, "0": False}
     ).fillna(False)
     return df
 
@@ -145,6 +145,7 @@ with st.sidebar:
 
     if uploaded:
         df = load_data(uploaded)
+        st.write("After load:", df["Discount_Applied"].unique())
     elif os.path.exists(DATA_FILE):
         df = load_data(DATA_FILE)   # auto-reads local zip
         st.markdown("### Filters")
@@ -159,6 +160,8 @@ with st.sidebar:
             df["Customer_Category"].isin(sel_cats) &
             df["Store_Type"].isin(sel_stores)
         )
+        st.write("Unique Discount values:", df["Discount_Applied"].unique())
+        st.write("Value counts:", df["Discount_Applied"].value_counts())
         dff = df[mask].copy()
         st.caption(f"**{len(dff):,}** transactions selected")
     else:
