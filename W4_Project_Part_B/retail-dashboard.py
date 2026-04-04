@@ -281,8 +281,9 @@ with tabs[2]:
     with col1:
         st.markdown("<div class='section-title'>Avg Cost: Discount vs No Discount</div>", unsafe_allow_html=True)
         disc_avg = dff.groupby("Discount_Applied")["Total_Cost"].mean().reset_index()
-        disc_avg["Discount_Applied"] = disc_avg["Discount_Applied"].map({True: "Discount", False: "No Discount"})
+        disc_avg["Discount_Applied"] = disc_avg["Discount_Applied"].astype(bool).map({True: "Discount", False: "No Discount"})
         disc_avg.columns = ["Discount", "Avg Cost"]
+        st.write(disc_avg)  # temporary debug
         fig = px.bar(disc_avg, x="Discount", y="Avg Cost",
                      color="Discount", color_discrete_sequence=[ACCENT, PALETTE[2]],
                      text=disc_avg["Avg Cost"].map(lambda x: f"${x:,.0f}"))
