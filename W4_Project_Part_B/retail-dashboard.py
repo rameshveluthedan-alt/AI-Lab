@@ -116,7 +116,7 @@ PALETTE = ["#c8761a", "#2a9d8f", "#e76f51", "#457b9d", "#6a4c93", "#e9c46a", "#2
 @st.cache_data(show_spinner="Loading & preparing data…")
 def load_data(file) -> pd.DataFrame:
     df = pd.read_csv(file, compression="infer")
-    df["Date"] = pd.to_datetime(df["Date"], infer_datetime_format=True, errors="coerce")
+    df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df.dropna(subset=["Date"], inplace=True)
     df["Year"]      = df["Date"].dt.year
     df["Month"]     = df["Date"].dt.month
