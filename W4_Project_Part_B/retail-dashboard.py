@@ -115,7 +115,13 @@ PALETTE = ["#c8761a", "#2a9d8f", "#e76f51", "#457b9d", "#6a4c93", "#e9c46a", "#2
 # ─────────────────────────────────────────────
 @st.cache_data(show_spinner="Loading & preparing data…")
 def load_data(file) -> pd.DataFrame:
-    df = pd.read_csv(file, compression="infer")
+    df = pd.read_csv(
+    file,
+    compression="infer",
+    quotechar='"',
+    skipinitialspace=True,
+    on_bad_lines="skip"
+    )
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df.dropna(subset=["Date"], inplace=True)
     df["Year"]      = df["Date"].dt.year
@@ -160,6 +166,9 @@ with st.sidebar:
             df["Customer_Category"].isin(sel_cats) &
             df["Store_Type"].isin(sel_stores)
         )
+        st.write("Row count:", len(df))
+        st.write("Total_Cost mean:", df["Total_Cost"].mean())
+        st.write("Columns:", df.columns.tolist())
         st.write("Unique Discount values:", df["Discount_Applied"].unique())
         st.write("Value counts:", df["Discount_Applied"].value_counts())
         dff = df[mask].copy()
