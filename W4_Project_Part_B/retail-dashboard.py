@@ -115,13 +115,7 @@ PALETTE = ["#c8761a", "#2a9d8f", "#e76f51", "#457b9d", "#6a4c93", "#e9c46a", "#2
 # ─────────────────────────────────────────────
 @st.cache_data(show_spinner="Loading & preparing data…")
 def load_data(file) -> pd.DataFrame:
-    df = pd.read_csv(
-    file,
-    compression="infer",
-    quotechar='"',
-    skipinitialspace=True,
-    on_bad_lines="skip"
-    )
+    df = pd.read_csv(file, compression="infer")
     df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
     df.dropna(subset=["Date"], inplace=True)
     df["Year"]      = df["Date"].dt.year
@@ -166,18 +160,8 @@ with st.sidebar:
             df["Customer_Category"].isin(sel_cats) &
             df["Store_Type"].isin(sel_stores)
         )
-        st.write("Row count:", len(df))
-        st.write("Total_Cost sample:", df["Total_Cost"].head(10).tolist())
-        st.write("Total_Cost max:", df["Total_Cost"].max())
-        st.write("Total_Cost min:", df["Total_Cost"].min())
-        st.write("Total_Cost mean:", df["Total_Cost"].mean())
-        st.write("Columns:", df.columns.tolist())
         st.write("Unique Discount values:", df["Discount_Applied"].unique())
         st.write("Value counts:", df["Discount_Applied"].value_counts())
-        true_avg  = df[df["Discount_Applied"]]["Total_Cost"].mean()
-        false_avg = df[df["Discount_Applied"] == False]["Total_Cost"].mean()
-        st.write("Discount TRUE avg:", true_avg)
-        st.write("Discount FALSE avg:", false_avg)
         dff = df[mask].copy()
         st.caption(f"**{len(dff):,}** transactions selected")
     else:
