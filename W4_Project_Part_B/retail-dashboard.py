@@ -174,6 +174,10 @@ with st.sidebar:
         st.write("Columns:", df.columns.tolist())
         st.write("Unique Discount values:", df["Discount_Applied"].unique())
         st.write("Value counts:", df["Discount_Applied"].value_counts())
+        true_avg  = df[df["Discount_Applied"] == True]["Total_Cost"].mean()
+        false_avg = df[df["Discount_Applied"] == False]["Total_Cost"].mean()
+        st.write("Discount TRUE avg:", true_avg)
+        st.write("Discount FALSE avg:", false_avg)
         dff = df[mask].copy()
         st.caption(f"**{len(dff):,}** transactions selected")
     else:
